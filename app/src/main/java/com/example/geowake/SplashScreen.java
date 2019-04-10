@@ -15,7 +15,7 @@ public class SplashScreen extends MainActivity {
 
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                startActivity(new Intent(SplashScreen.this, MapsActivity.class));
                 SplashScreen.this.finish();
             }
         }, SPLASH_TIME_OUT);

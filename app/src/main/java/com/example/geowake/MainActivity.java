@@ -2,8 +2,12 @@ package com.example.geowake;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -14,7 +18,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
@@ -59,12 +66,37 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng lund = new LatLng(55.70584, 13.19321);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lund));
-        mMap.addMarker(new MarkerOptions().position(lund).title("Marker in Lund").draggable(true));
+        Marker mMarker = mMap.addMarker(new MarkerOptions().position(lund).title("Marker in Lund").draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lund));
-
+        Circle mCircle = mMap.addCircle(new CircleOptions().center(lund).radius(150).strokeColor(Color.RED).fillColor(0x220000FF).strokeWidth(5));
 
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
+
+/*
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        Location location = locationManager.getLastKnownLocation(locationManager
+                .getBestProvider(criteria, false));
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+        */
+        float[] distance = new float[1];
+
+
+/*
+        Location.distanceBetween(latitude,
+                longitude, mCircle.getCenter().latitude,
+                mCircle.getCenter().longitude, distance);
+*/
+        if (distance[0] > mCircle.getRadius()) {
+            //Do nothing
+
+        }else if (distance[0] < mCircle.getRadius()) {
+        //Trigger Alarm
+        }
 
     }
 

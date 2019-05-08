@@ -38,7 +38,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button setAlarm;
     private FusedLocationProviderClient fusedLocationClient;
     private Location myLocation = new Location("");
-    private float distanceInMeters = 0;
+    private float distanceInMeters = 10000;
     private Circle mCircle;
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
@@ -197,7 +197,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Location circle = new Location("");
                         circle.setLatitude(mCircle.getCenter().latitude);
                         circle.setLongitude(mCircle.getCenter().longitude);
-
+                        distanceInMeters = circle.distanceTo(myLocation);
                         if (distanceInMeters < mCircle.getRadius()) {
                             //Trigger Alarm
                             Toast.makeText(getApplicationContext(), "Wakey Wakey", Toast.LENGTH_LONG).show();

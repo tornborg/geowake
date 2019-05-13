@@ -10,8 +10,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,6 +28,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -40,17 +44,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location myLocation = new Location("");
     private float distanceInMeters = 10000;
     private Circle mCircle;
+    private Marker mMarker;
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
+    private SeekBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
 
 
 
@@ -85,8 +94,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startLocationUpdates();
         startLocationService();
 
-
-
+        progress =  (SeekBar) findViewById(R.id.progress);
+        progress.setVisibility(View.INVISIBLE);
+        progress.setMin(50);
+        progress.setMax(1000);
+        progress.setProgress(300);
 
     }
 
@@ -116,18 +128,60 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         LatLng lund = new LatLng(55.70584, 13.19321);
-        LatLng onon = new LatLng(55.710605, 13.208169);
+        LatLng onon = new LatLng(55.714845, 13.213390);
 
         //inits
         mMap.setMinZoomPreference(13.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(lund));
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
-        //Circle
-        mCircle = mMap.addCircle(new CircleOptions().center(onon).radius(150).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
+
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+
+                // First check if myMarker is null
+                if (mMarker == null && mCircle == null) {
+
+                    // Marker was not set yet. Add marker:
+                    mMarker = mMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .title("Destination")
+                            .snippet("I'm going to"));
+
+                    //Circle
+                    mCircle = mMap.addCircle(new CircleOptions().center(latLng).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
+
+                    progress.setVisibility(View.VISIBLE);
+                }
+                else {
+
+                    // Marker already exists, just update it's position
+                    mMarker.setPosition(latLng);
+                    mCircle.setCenter(latLng);
+
+
+                }
+            }
+        });
+
+
+            progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    mCircle.setRadius(progress);
+
+                }
+                @Override
+                public void onStartTrackingTouch(final SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(final SeekBar seekBar) {
+                }
+            });
+
 
     }
-
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
@@ -195,13 +249,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         // Got last known location. In some rare situations this can be null.
                         myLocation = location;
                         Location circle = new Location("");
-                        circle.setLatitude(mCircle.getCenter().latitude);
-                        circle.setLongitude(mCircle.getCenter().longitude);
-                        distanceInMeters = circle.distanceTo(myLocation);
-                        if (distanceInMeters < mCircle.getRadius()) {
-                            //Trigger Alarm
-                            Toast.makeText(getApplicationContext(), "Wakey Wakey", Toast.LENGTH_LONG).show();
-
+                        if(mCircle != null) {
+                            circle.setLatitude(mCircle.getCenter().latitude);
+                            circle.setLongitude(mCircle.getCenter().longitude);
+                            distanceInMeters = circle.distanceTo(myLocation);
+                            if (distanceInMeters < mCircle.getRadius()) {
+                                //Trigger Alarm
+                                Toast.makeText(getApplicationContext(), "Wakey Wakey", Toast.LENGTH_LONG).show();
+                            }
                         }
 
                     }
@@ -213,6 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
     }
+
 
 
 

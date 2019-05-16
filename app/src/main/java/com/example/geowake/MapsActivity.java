@@ -31,7 +31,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     static public final int REQUEST_LOCATION = 1;
-
     private Button setAlarm;
     private Location myLocation = new Location("");
     private float distanceInMeters = 10000;
@@ -105,9 +104,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationClickListener(this);
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
 
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
-            public void onMapLongClick(LatLng latLng) {
+            public void onMapClick(LatLng latLng) {
 
                 // First check if myMarker is null
                 if (mMarker == null && mCircle == null) {
@@ -116,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMarker = mMap.addMarker(new MarkerOptions()
                             .position(latLng)
                             .title("Destination")
-                            .snippet("I'm going to"));
+                            .snippet("I'm going here"));
 
                     //Circle
                     mCircle = mMap.addCircle(new CircleOptions().center(latLng).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
@@ -133,7 +132,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
-
 
             progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -215,9 +213,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     };
-
-
-
 
 }
 

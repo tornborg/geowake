@@ -41,9 +41,7 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
         ((View) stopAlarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Alarm Turned Off", Toast.LENGTH_LONG).show();
-                openMapsActivity();
-                vibrator.cancel();
+                stopEvents();
             }
         });
 
@@ -64,9 +62,7 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 
             if (mAccel > 5) {
-                Toast.makeText(getApplicationContext(), "Alarm Turned Off", Toast.LENGTH_LONG).show();
-                vibrator.cancel();
-                openMapsActivity();
+                stopEvents();
                 }
             }
         }
@@ -79,6 +75,14 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
         private void openMapsActivity(){
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
+
+        }
+
+        private void stopEvents(){
+            Toast.makeText(getApplicationContext(), "Alarm Turned Off", Toast.LENGTH_LONG).show();
+            vibrator.cancel();
+            mSensorManager = null;
+            openMapsActivity();
 
         }
 

@@ -12,11 +12,15 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,6 +43,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker mMarker;
     private SeekBar progress;
     private Button setFavorite;
+    private AutoCompleteTextView textInput;
+
+    private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Lisseberg"};
 
 
     @Override
@@ -55,7 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ((View) setAlarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSetAlarm();
+                setDestination();
             }
         });
 
@@ -74,8 +81,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         progress.setMax(1000);
         progress.setProgress(300);
         //setAlarm.setHapticFeedbackEnabled(true);
-
-
+        textInput = findViewById(R.id.autoCompleteTextView);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, PLACES);
+        textInput.setAdapter(adapter);
     }
 
 
@@ -218,6 +226,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, AlarmScreen.class);
         startActivity(intent);
     }
+
+   public void setDestination(){
+        if(textInput.getText().toString().equals("Lunds Tekniska Hogskola")){
+           LatLng lth = new LatLng(55.714771, 13.212079);
+           CameraUpdate current = CameraUpdateFactory.newLatLngZoom(lth,15);
+
+           mMap.animateCamera(current);
+            if (mMarker == null && mCircle == null) {
+
+                // Marker was not set yet. Add marker:
+                mMarker = mMap.addMarker(new MarkerOptions()
+                        .position(lth)
+                        .title("Destination")
+                        .snippet("I'm going here"));
+
+                //Circle
+                mCircle = mMap.addCircle(new CircleOptions().center(lth).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
+
+                progress.setVisibility(View.VISIBLE);
+            }
+
+            else {
+
+                // Marker already exists, just update it's position
+                mMarker.setPosition(lth);
+                mCircle.setCenter(lth);
+
+
+            }
+        }
+   }
 
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {

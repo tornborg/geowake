@@ -6,15 +6,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -32,7 +36,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback,
+        GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationClickListener,
+        SecondFragment.OnFragmentInteractionListener,
+        StartFragment.OnFragmentInteractionListener {
 
     private GoogleMap mMap;
     static public final int REQUEST_LOCATION = 1;
@@ -44,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private SeekBar progress;
     private Button setFavorite;
     private AutoCompleteTextView textInput;
+    private FrameLayout fragmentContainer;
 
     private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Lisseberg"};
 
@@ -58,32 +68,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        setAlarm = (Button) findViewById(R.id.setAlarmButton);
-        ((View) setAlarm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDestination();
-            }
-        });
 
+        fragmentContainer = (FrameLayout) findViewById(R.id.startFragment);
+        textInput = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView2);
         setFavorite = (Button) findViewById(R.id.button2);
-        ((View) setFavorite).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFavorites();
-            }
-        });
 
+        openStartFragment();
+    }
 
-        progress =  (SeekBar) findViewById(R.id.progress);
-        progress.setVisibility(View.INVISIBLE);
-        progress.setMin(50);
-        progress.setMax(1000);
-        progress.setProgress(300);
-        //setAlarm.setHapticFeedbackEnabled(true);
-        textInput = findViewById(R.id.autoCompleteTextView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, PLACES);
-        textInput.setAdapter(adapter);
+    public void openStartFragment () {
+        StartFragment fragment = StartFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.add(R.id.main, fragment, "START_FRAGMENT").commit();
+
     }
 
 
@@ -153,19 +152,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-            progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    mCircle.setRadius(progress);
-
-                }
-                @Override
-                public void onStartTrackingTouch(final SeekBar seekBar) {
-                }
-
-                @Override
-                public void onStopTrackingTouch(final SeekBar seekBar) {
-                }
-            });
+//            progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                    mCircle.setRadius(progress);
+//
+//                }
+//                @Override
+//                public void onStartTrackingTouch(final SeekBar seekBar) {
+//                }
+//
+//                @Override
+//                public void onStopTrackingTouch(final SeekBar seekBar) {
+//                }
+//            });
 
 
     }
@@ -279,6 +278,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     };
 
+    @Override
+    public void onFragmentInteraction() {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
 
 

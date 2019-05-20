@@ -208,7 +208,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, SetAlarmActivity.class);
         startActivity(intent);
 
-
     }
     public void openFavorites() {
         setFavorite.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -217,6 +216,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+    public void openAlarmScreen() {
+        Intent intent = new Intent(this, AlarmScreen.class);
+        startActivity(intent);
+
+
+    }
+
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
@@ -230,6 +236,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 distanceInMeters = circle.distanceTo(myLocation);
                 if (distanceInMeters < mCircle.getRadius()) {
                     //Trigger Alarm
+                    openAlarmScreen();
                     Toast.makeText(getApplicationContext(), "Wakey Wakey", Toast.LENGTH_LONG).show();
                 }
             }

@@ -27,7 +27,7 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
 
 
         vibrator.vibrate(VibrationEffect.createWaveform(vibPattern, 0));
-       mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;

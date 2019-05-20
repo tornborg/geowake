@@ -16,6 +16,10 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,7 +29,6 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
@@ -37,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Circle mCircle;
     private Marker mMarker;
     private SeekBar progress;
+    private static final String TAG = "MapsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
 
 
@@ -66,6 +71,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         progress.setMin(50);
         progress.setMax(1000);
         progress.setProgress(300);
+
+        /*
+        SetDestinationFragment sdf = new SetDestinationFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.FirstLayout, sdf, sdf.getTag()).commit();
+*/
+
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName().toString()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 12.0f));
+            }
+
+            @Override
+            public void onError(Status status) {
+
+            }
+        });
 
     }
 
@@ -103,8 +133,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
-
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
             @Override
             public void onMapClick(LatLng latLng) {
 
@@ -121,6 +151,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mCircle = mMap.addCircle(new CircleOptions().center(latLng).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
 
                     progress.setVisibility(View.VISIBLE);
+
                 }
                 else {
 
@@ -194,25 +225,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, SetAlarmActivity.class);
         startActivity(intent);
     }
+    public void openAlarmScreen() {
+        Intent intent = new Intent(this, AlarmScreen.class);
+        startActivity(intent);
+    }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
             myLocation = location;
             Location circle = new Location("");
-
             if(mCircle != null) {
                 circle.setLatitude(mCircle.getCenter().latitude);
                 circle.setLongitude(mCircle.getCenter().longitude);
                 distanceInMeters = circle.distanceTo(myLocation);
                 if (distanceInMeters < mCircle.getRadius()) {
                     //Trigger Alarm
+                    openAlarmScreen();
                     Toast.makeText(getApplicationContext(), "Wakey Wakey", Toast.LENGTH_LONG).show();
                 }
             }
 
         }
     };
+
+
 
 }
 

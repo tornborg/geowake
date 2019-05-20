@@ -6,20 +6,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,6 +28,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
@@ -40,7 +40,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Circle mCircle;
     private Marker mMarker;
     private SeekBar progress;
-    private static final String TAG = "MapsActivity";
+    private Button setFavorite;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +53,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-
-
-
-
         setAlarm = (Button) findViewById(R.id.setAlarmButton);
         ((View) setAlarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openSetAlarm();
+            }
+        });
+
+        setFavorite = (Button) findViewById(R.id.button2);
+        ((View) setFavorite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFavorites();
             }
         });
 
@@ -71,33 +75,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         progress.setMin(50);
         progress.setMax(1000);
         progress.setProgress(300);
+        //setAlarm.setHapticFeedbackEnabled(true);
 
-        /*
-        SetDestinationFragment sdf = new SetDestinationFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.FirstLayout, sdf, sdf.getTag()).commit();
-*/
-
-
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName().toString()));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 12.0f));
-            }
-
-            @Override
-            public void onError(Status status) {
-
-            }
-        });
 
     }
+
 
     /**
      * Manipulates the map once available.
@@ -108,6 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -133,8 +116,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
 
@@ -151,7 +134,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mCircle = mMap.addCircle(new CircleOptions().center(latLng).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
 
                     progress.setVisibility(View.VISIBLE);
-
                 }
                 else {
 
@@ -222,12 +204,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void openSetAlarm() {
+        setAlarm.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         Intent intent = new Intent(this, SetAlarmActivity.class);
         startActivity(intent);
+
+
     }
-    public void openAlarmScreen() {
-        Intent intent = new Intent(this, AlarmScreen.class);
+    public void openFavorites() {
+        setFavorite.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        Intent intent = new Intent(this, FavoritesActivity.class);
         startActivity(intent);
+
+
     }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
@@ -235,21 +223,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         public void onMyLocationChange(Location location) {
             myLocation = location;
             Location circle = new Location("");
+
             if(mCircle != null) {
                 circle.setLatitude(mCircle.getCenter().latitude);
                 circle.setLongitude(mCircle.getCenter().longitude);
                 distanceInMeters = circle.distanceTo(myLocation);
                 if (distanceInMeters < mCircle.getRadius()) {
                     //Trigger Alarm
-                    openAlarmScreen();
                     Toast.makeText(getApplicationContext(), "Wakey Wakey", Toast.LENGTH_LONG).show();
                 }
             }
 
         }
     };
-
-
 
 }
 

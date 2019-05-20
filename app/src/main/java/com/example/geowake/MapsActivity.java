@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -38,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker mMarker;
     private SeekBar progress;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -47,10 +51,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
-
-
 
         setAlarm = (Button) findViewById(R.id.setAlarmButton);
         ((View) setAlarm).setOnClickListener(new View.OnClickListener() {
@@ -66,8 +66,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         progress.setMin(50);
         progress.setMax(1000);
         progress.setProgress(300);
+        setAlarm.setHapticFeedbackEnabled(true);
+
 
     }
+
 
     /**
      * Manipulates the map once available.
@@ -78,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -191,8 +195,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void openSetAlarm() {
+        setAlarm.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         Intent intent = new Intent(this, SetAlarmActivity.class);
         startActivity(intent);
+
+
     }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {

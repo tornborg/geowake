@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -135,6 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     progress.setVisibility(View.VISIBLE);
                 }
+
                 else {
 
                     // Marker already exists, just update it's position
@@ -213,14 +212,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setFavorite.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         Intent intent = new Intent(this, FavoritesActivity.class);
         startActivity(intent);
-
-
     }
+
     public void openAlarmScreen() {
         Intent intent = new Intent(this, AlarmScreen.class);
         startActivity(intent);
-
-
     }
 
 

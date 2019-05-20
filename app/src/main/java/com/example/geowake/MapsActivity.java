@@ -40,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Circle mCircle;
     private Marker mMarker;
     private SeekBar progress;
+    private Button setFavorite;
 
 
     @Override
@@ -57,6 +58,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 openSetAlarm();
+            }
+        });
+
+        setFavorite = (Button) findViewById(R.id.button2);
+        ((View) setFavorite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFavorites();
             }
         });
 
@@ -197,6 +206,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void openSetAlarm() {
         setAlarm.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         Intent intent = new Intent(this, SetAlarmActivity.class);
+        startActivity(intent);
+
+
+    }
+    public void openFavorites() {
+        setFavorite.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        Intent intent = new Intent(this, FavoritesActivity.class);
         startActivity(intent);
 
 

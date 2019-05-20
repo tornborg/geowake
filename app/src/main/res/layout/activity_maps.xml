@@ -17,53 +17,14 @@
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/setAlarmButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="106dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/yantramanav_thin"
-        android:text="Set Alarm"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        map:layout_constraintBottom_toTopOf="@+id/button2"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent"
-
-        map:layout_constraintTop_toBottomOf="@+id/map" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="106dp"
-        android:layout_marginBottom="92dp"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/yantramanav_thin"
-        android:text="Favorites"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
+    <fragment xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/start"
+        android:name="com.example.geowake.StartFragment"
+        android:layout_width="match_parent"
+        android:layout_height="333dp"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toBottomOf="@+id/setAlarmButton" />
-
-    <SeekBar
-        android:id="@+id/progress"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="30dp"
-        map:layout_constraintBottom_toTopOf="@+id/setAlarmButton"
-        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintHorizontal_bias="0.0"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toBottomOf="@+id/map" />
 

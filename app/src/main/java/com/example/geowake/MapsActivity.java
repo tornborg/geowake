@@ -9,8 +9,10 @@ import android.location.Location;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,18 +52,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
 
-        setAlarm = (Button) findViewById(R.id.setAlarmButton);
-        ((View) setAlarm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSetAlarm();
-            }
-        });
 
 
-        progress =  (SeekBar) findViewById(R.id.progress);
         progress.setVisibility(View.INVISIBLE);
         progress.setMin(50);
         progress.setMax(1000);
@@ -70,6 +65,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+
+    public Fragment getItem (int position) {
+        Fragment frag = null;
+        switch (position) {
+            case 0:
+                frag = StartFragment.newInstance("","");
+                break;
+
+        }
+        return frag;
+    }
+
+
 
 
     /**

@@ -8,6 +8,20 @@
     android:background="@drawable/gradient"
     tools:context=".AlarmScreen">
 
+    <ImageView
+        android:layout_width="317dp"
+        android:layout_height="360dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="304dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/version"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
@@ -16,13 +30,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:textSize="60dp"
         android:fontFamily="@font/yantramanav_thin"
-        android:text="Shake To Stop The Alarm"
+        android:text="Shake Or Press Button To Stop The Alarm"
         android:textAlignment="center"
         android:textColor="@android:color/white"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.634" />
 </android.support.constraint.ConstraintLayout>

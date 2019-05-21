@@ -61,7 +61,7 @@
             android:singleLine="false"
             android:text="50 m"
             android:textColor="#CACACA"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@+id/progress"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
 
         <TextView
             android:id="@+id/editText4"
-            android:layout_width="43dp"
+            android:layout_width="47dp"
             android:layout_height="43dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="90dp"
@@ -82,7 +82,7 @@
             android:singleLine="false"
             android:text="1000 m"
             android:textColor="#CACACA"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/progress"
@@ -91,8 +91,8 @@
 
         <TextView
             android:id="@+id/editText5"
-            android:layout_width="128dp"
-            android:layout_height="33dp"
+            android:layout_width="194dp"
+            android:layout_height="31dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="55dp"
             android:layout_marginEnd="8dp"
@@ -104,7 +104,7 @@
             android:singleLine="false"
             android:text="Set alarm radius below"
             android:textColor="#CACACA"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/progress"
             app:layout_constraintEnd_toEndOf="parent"

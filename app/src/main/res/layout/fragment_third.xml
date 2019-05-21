@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/startFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/secondFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00000000"
     tools:context=".StartFragment"
-    android:layout_gravity="bottom"
-    >
-
+    android:layout_gravity="bottom">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00000000">
 
+
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/stop"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="106dp"
@@ -29,33 +25,34 @@
             android:layout_marginBottom="100dp"
             android:background="@drawable/button_background"
             android:fontFamily="@font/yantramanav_thin"
-            android:text="Favorites"
+            android:text="Stop alarm"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView2" />
+            app:layout_constraintTop_toBottomOf="@+id/sweetdreams" />
 
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView2"
-            android:layout_width="200dp"
+
+        <TextView
+            android:id="@+id/sweetdreams"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="106dp"
             android:layout_marginTop="92dp"
             android:layout_marginEnd="106dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/yantramanav_thin"
-            android:hint="Set destination...."
-            android:inputType="text"
-            android:textColorHint="@color/quantum_white_100"
+            android:text="Sweet dreams!"
+            android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:theme="@style/Autocomplete"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/stop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+
 </FrameLayout>

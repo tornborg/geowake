@@ -1,7 +1,6 @@
 package com.example.geowake;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,23 +12,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-public class SecondFragment extends Fragment {
+public class ThirdFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
+    private Button stop;
 
-
-    private Button startAlarm;
 
     private OnFragmentInteractionListener mListener;
 
-    public SecondFragment() {
+    public ThirdFragment() {
         // Required empty public constructor
     }
 
-    public static SecondFragment newInstance(String param1) {
-        SecondFragment fragment = new SecondFragment();
+
+    public static ThirdFragment newInstance(String param1, String param2) {
+        ThirdFragment fragment = new ThirdFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,37 +35,37 @@ public class SecondFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View view  = inflater.inflate(R.layout.fragment_second, container, false);
+        View view =  inflater.inflate(R.layout.fragment_third, container, false);
 
-        startAlarm = view.findViewById(R.id.start);
+        stop  = view.findViewById(R.id.stop);
 
-        startAlarm.setOnClickListener(new View.OnClickListener() {
+        stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openThirdFragment();
+                openStartFragment();
             }
         });
-
 
 
         return view;
     }
 
-    private void openThirdFragment(){
-        ThirdFragment thirdFragment = new ThirdFragment();
+    public void openStartFragment() {
+        StartFragment startFragment = new StartFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.slide, R.anim.slide);
-        transaction.replace(R.id.main, thirdFragment, "THIRD_FRAGMENT").commit();
+        transaction.replace(R.id.main, startFragment, "START_FRAGMENT").commit();
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -75,8 +73,6 @@ public class SecondFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
-
 
     @Override
     public void onAttach(Context context) {
@@ -89,8 +85,6 @@ public class SecondFragment extends Fragment {
         }
     }
 
-
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -98,6 +92,7 @@ public class SecondFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

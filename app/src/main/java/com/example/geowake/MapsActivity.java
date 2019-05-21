@@ -24,6 +24,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 
+import com.example.geowake.ThirdFragment.OnFragmentInteractionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,7 +42,8 @@ public class MapsActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         SecondFragment.OnFragmentInteractionListener,
-        StartFragment.OnFragmentInteractionListener {
+        StartFragment.OnFragmentInteractionListener,
+        OnFragmentInteractionListener{
 
     private GoogleMap mMap;
     static public final int REQUEST_LOCATION = 1;
@@ -55,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements
     private AutoCompleteTextView textInput;
     private FrameLayout fragmentContainer;
 
-    private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Lisseberg"};
+    private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Liseberg"};
 
 
     @Override

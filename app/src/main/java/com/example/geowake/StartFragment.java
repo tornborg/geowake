@@ -1,5 +1,6 @@
 package com.example.geowake;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 public class StartFragment extends Fragment {
@@ -66,6 +70,7 @@ public class StartFragment extends Fragment {
 
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
+
             @Override
             public boolean onEditorAction(TextView v, int actionId,
                                           KeyEvent event)
@@ -73,8 +78,10 @@ public class StartFragment extends Fragment {
                 boolean handled = false;
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
 
-                    swapFragment();
+                    hideKeyboard();
+                    openSecondFragment();
                     handled = true;
+
                 }
                 return handled;
             }
@@ -82,12 +89,23 @@ public class StartFragment extends Fragment {
         return view;
     }
 
-      private void swapFragment(){
+
+    public void hideKeyboard() {
+
+
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(textInput.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
+    }
+
+
+
+      private void openSecondFragment(){
         SecondFragment secondFragment = new SecondFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
           transaction.setCustomAnimations(R.anim.slide, R.anim.slide);
-          transaction.replace(R.id.main, secondFragment, "START_FRAGMENT").commit();
+          transaction.replace(R.id.main, secondFragment, "SECOND_FRAGMENT").commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

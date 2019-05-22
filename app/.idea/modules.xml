@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../geowake.iml" filepath="$PROJECT_DIR$/../geowake.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../geoWake.iml" filepath="$PROJECT_DIR$/../geoWake.iml" />
     </modules>
   </component>
 </project>

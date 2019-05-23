@@ -43,6 +43,7 @@
             android:layout_marginEnd="106dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/yantramanav_thin"
+            android:textStyle="bold"
             android:text="Sweet dreams!"
             android:textAlignment="center"
             android:textColor="@android:color/white"
@@ -51,6 +52,58 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/circle1"
+            android:layout_width="7.5dp"
+            android:layout_height="7.5dp"
+            android:layout_marginStart="110dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/circle"
+            app:layout_constraintBottom_toTopOf="@+id/sweetdreams"
+            app:layout_constraintEnd_toStartOf="@+id/circle2"
+            app:layout_constraintStart_toStartOf="@+id/sweetdreams" />
+
+        <ImageView
+            android:id="@+id/circle3"
+            android:layout_width="7.5dp"
+            android:layout_height="7.5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/circle"
+            app:layout_constraintBottom_toTopOf="@+id/sweetdreams"
+            app:layout_constraintEnd_toEndOf="@+id/sweetdreams"
+            app:layout_constraintStart_toEndOf="@+id/circle2" />
+
+        <ImageView
+            android:id="@+id/circle2"
+            android:layout_width="7.5dp"
+            android:layout_height="7.5dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/circle"
+            app:layout_constraintBottom_toTopOf="@+id/sweetdreams"
+            app:layout_constraintEnd_toStartOf="@+id/circle3"
+            app:layout_constraintStart_toEndOf="@+id/circle1" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="177dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="176dp"
+            android:layout_marginBottom="20dp"
+            android:text="zZZ"
+            android:textSize="30dp"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/stop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sweetdreams" />
 
     </android.support.constraint.ConstraintLayout>
 

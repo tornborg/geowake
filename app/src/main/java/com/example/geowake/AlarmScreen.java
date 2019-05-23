@@ -64,7 +64,7 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 
-            if (mAccel > 3) {
+            if (mAccel > 10) {
                 stopEvents();
             }
         }

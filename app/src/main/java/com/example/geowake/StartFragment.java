@@ -2,6 +2,8 @@ package com.example.geowake;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
@@ -63,9 +66,16 @@ public class StartFragment extends Fragment {
 
 
 
+
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_start, container, false);
+        ImageView circle;
+        circle = view.findViewById(R.id.circle1);
+        circle.getBackground().setColorFilter(Color.parseColor("#ffffff"), PorterDuff.Mode.SRC_OVER);
+
+
+
         favorites = view.findViewById(R.id.button2);
 
         textInput = view.findViewById(R.id.autoCompleteTextView2);

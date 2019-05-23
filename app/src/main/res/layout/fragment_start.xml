@@ -19,6 +19,25 @@
         android:layout_height="match_parent"
         android:background="#00000000">
 
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="271dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="395dp"
+            android:alpha=".65"
+            android:text="Tap on map or enter address below to add destination"
+            android:fontFamily="@font/yantramanav_thin"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/circle1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/button2"
             android:layout_width="200dp"
@@ -60,6 +79,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/circle1"
+            android:layout_width="7.5dp"
+            android:layout_height="7.5dp"
+            android:layout_marginStart="110dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="37dp"
+            android:background="@drawable/circle"
+            app:layout_constraintBottom_toTopOf="@+id/autoCompleteTextView2"
+            app:layout_constraintEnd_toStartOf="@+id/circle2"
+            app:layout_constraintStart_toStartOf="@+id/autoCompleteTextView2" />
+
+        <ImageView
+            android:id="@+id/circle3"
+            android:layout_width="7.5dp"
+            android:layout_height="7.5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginBottom="37dp"
+            android:background="@drawable/circle"
+            app:layout_constraintBottom_toTopOf="@+id/autoCompleteTextView2"
+            app:layout_constraintEnd_toEndOf="@+id/autoCompleteTextView2"
+            app:layout_constraintStart_toEndOf="@+id/circle2" />
+
+        <ImageView
+            android:id="@+id/circle2"
+            android:layout_width="7.5dp"
+            android:layout_height="7.5dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="37dp"
+            android:background="@drawable/circle"
+            app:layout_constraintBottom_toTopOf="@+id/autoCompleteTextView2"
+            app:layout_constraintEnd_toStartOf="@+id/circle3"
+            app:layout_constraintStart_toEndOf="@+id/circle1" />
+
+
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

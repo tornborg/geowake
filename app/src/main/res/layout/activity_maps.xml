@@ -23,7 +23,7 @@
     <FrameLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="331dp"
+        android:layout_height="match_parent"
         android:layout_gravity="bottom"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"

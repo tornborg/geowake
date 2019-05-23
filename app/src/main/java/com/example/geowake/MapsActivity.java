@@ -14,12 +14,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.HapticFeedbackConstants;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+
 import android.widget.FrameLayout;
-import android.widget.MultiAutoCompleteTextView;
+
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -43,21 +42,24 @@ public class MapsActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationClickListener,
         SecondFragment.OnFragmentInteractionListener,
         StartFragment.OnFragmentInteractionListener,
-        OnFragmentInteractionListener{
+        OnFragmentInteractionListener {
 
     private GoogleMap mMap;
     static public final int REQUEST_LOCATION = 1;
     private Button setAlarm;
     private Location myLocation = new Location("");
     private float distanceInMeters = 10000;
-    private Circle mCircle;
+    public Circle mCircle;
     private Marker mMarker;
-    private SeekBar progress;
     private Button setFavorite;
     private AutoCompleteTextView textInput;
     private FrameLayout fragmentContainer;
+    private StartFragment startFragment;
+    private boolean alarmIsActive = false;
+    private int currentFragment = 0;
+    private FragmentManager fragmentManager;
+    private  FragmentTransaction transaction;
 
-    private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Liseberg"};
 
 
     @Override
@@ -78,13 +80,13 @@ public class MapsActivity extends FragmentActivity implements
         openStartFragment();
     }
 
-    public void openStartFragment () {
-        StartFragment fragment = StartFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+    public void openStartFragment() {
+        startFragment = StartFragment.newInstance();
+        fragmentManager = getSupportFragmentManager();
+        transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide, R.anim.slideback);
         transaction.addToBackStack(null);
-        transaction.add(R.id.main, fragment, "START_FRAGMENT").commit();
-
+        transaction.add(R.id.main, startFragment, "START_FRAGMENT").commit();
     }
 
 
@@ -113,7 +115,6 @@ public class MapsActivity extends FragmentActivity implements
         }
 
 
-
         LatLng lund = new LatLng(55.70584, 13.19321);
         LatLng onon = new LatLng(55.714845, 13.213390);
 
@@ -128,45 +129,33 @@ public class MapsActivity extends FragmentActivity implements
             @Override
             public void onMapClick(LatLng latLng) {
 
-                // First check if myMarker is null
-                if (mMarker == null && mCircle == null) {
+                if (currentFragment == 0) {
+                    startFragment.openSecondFragment();
 
-                    // Marker was not set yet. Add marker:
-                    mMarker = mMap.addMarker(new MarkerOptions()
-                            .position(latLng)
-                            .title("Destination")
-                            .snippet("I'm going here"));
+                    // First check if myMarker is null
+                    if (mMarker == null && mCircle == null) {
 
-                    //Circle
-                    mCircle = mMap.addCircle(new CircleOptions().center(latLng).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
+                        // Marker was not set yet. Add marker:
+                        mMarker = mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title("Destination")
+                                .snippet("I'm going here"));
 
-                    progress.setVisibility(View.VISIBLE);
-                }
+                        //Circle
+                        mCircle = mMap.addCircle(new CircleOptions().center(latLng).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
 
-                else {
+                        //progress.setVisibility(View.VISIBLE);
+                    } else {
 
-                    // Marker already exists, just update it's position
-                    mMarker.setPosition(latLng);
-                    mCircle.setCenter(latLng);
+                        // Marker already exists, just update it's position
+                        mMarker.setPosition(latLng);
+                        mCircle.setCenter(latLng);
 
 
+                    }
                 }
             }
         });
-
-//            progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                    mCircle.setRadius(progress);
-//
-//                }
-//                @Override
-//                public void onStartTrackingTouch(final SeekBar seekBar) {
-//                }
-//
-//                @Override
-//                public void onStopTrackingTouch(final SeekBar seekBar) {
-//                }
-//            });
 
 
     }
@@ -217,6 +206,7 @@ public class MapsActivity extends FragmentActivity implements
         startActivity(intent);
 
     }
+
     public void openFavorites() {
         setFavorite.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         Intent intent = new Intent(this, FavoritesActivity.class);
@@ -228,12 +218,12 @@ public class MapsActivity extends FragmentActivity implements
         startActivity(intent);
     }
 
-   public void setDestination(){
-        if(textInput.getText().toString().equals("Lunds Tekniska Hogskola")){
-           LatLng lth = new LatLng(55.714771, 13.212079);
-           CameraUpdate current = CameraUpdateFactory.newLatLngZoom(lth,15);
+    public void setDestination() {
+        if (startFragment.textInput.getText().toString().equals("Lunds Tekniska Hogskola")) {
+            LatLng lth = new LatLng(55.714771, 13.212079);
+            CameraUpdate current = CameraUpdateFactory.newLatLngZoom(lth, 15);
 
-           mMap.animateCamera(current);
+            mMap.animateCamera(current);
             if (mMarker == null && mCircle == null) {
 
                 // Marker was not set yet. Add marker:
@@ -245,10 +235,8 @@ public class MapsActivity extends FragmentActivity implements
                 //Circle
                 mCircle = mMap.addCircle(new CircleOptions().center(lth).radius(300).strokeColor(Color.RED).fillColor(0x22FF0000).strokeWidth(5));
 
-                progress.setVisibility(View.VISIBLE);
-            }
 
-            else {
+            } else {
 
                 // Marker already exists, just update it's position
                 mMarker.setPosition(lth);
@@ -257,7 +245,7 @@ public class MapsActivity extends FragmentActivity implements
 
             }
         }
-   }
+    }
 
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
@@ -266,7 +254,8 @@ public class MapsActivity extends FragmentActivity implements
             myLocation = location;
             Location circle = new Location("");
 
-            if(mCircle != null) {
+
+            if (mCircle != null && alarmIsActive == true) {
                 circle.setLatitude(mCircle.getCenter().latitude);
                 circle.setLongitude(mCircle.getCenter().longitude);
                 distanceInMeters = circle.distanceTo(myLocation);
@@ -287,6 +276,42 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public void changeAlarmStatus() {
+        alarmIsActive = !alarmIsActive;
+    }
+
+    public void reset() {
+
+        if (mCircle != null && mCircle != null) {
+            mCircle.remove();
+            mCircle = null;
+
+            mMarker.remove();
+            mMarker = null;
+        }
+    }
+
+    public void setFragment(int current) {
+        currentFragment = current;
+    }
+
+    public void onBackPressed() {
+
+        if (currentFragment == 0) {
+        }
+        if (currentFragment == 1) {
+            super.onBackPressed();
+            startFragment.textInput.clearComposingText();
+
+            transaction.setCustomAnimations(R.anim.slide, R.anim.slideback);
+
+        }
+
+        if (currentFragment == 2) {
+        }
 
     }
 }

@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
 
 
 public class SecondFragment extends Fragment {
@@ -21,6 +23,8 @@ public class SecondFragment extends Fragment {
     private Button startAlarm;
 
     private OnFragmentInteractionListener mListener;
+
+    private SeekBar radius;
 
     public SecondFragment() {
         // Required empty public constructor
@@ -44,30 +48,53 @@ public class SecondFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view  = inflater.inflate(R.layout.fragment_second, container, false);
+        View view = inflater.inflate(R.layout.fragment_second, container, false);
+
+        ((MapsActivity) getActivity()).setFragment(1);
+
+        radius = view.findViewById(R.id.progress);
+        radius.setMin(50);
+        radius.setMax(1000);
+        radius.setProgress(300);
 
         startAlarm = view.findViewById(R.id.start);
 
         startAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                startAlarm.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                ((MapsActivity) getActivity()).changeAlarmStatus();
                 openThirdFragment();
             }
         });
 
+        radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                ((MapsActivity) getActivity()).mCircle.setRadius(progress);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(final SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(final SeekBar seekBar) {
+            }
+        });
 
 
         return view;
     }
 
-    private void openThirdFragment(){
+    private void openThirdFragment() {
         ThirdFragment thirdFragment = new ThirdFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide, R.anim.slide);
+        transaction.setCustomAnimations(R.anim.slide, R.anim.slideback);
         transaction.replace(R.id.main, thirdFragment, "THIRD_FRAGMENT").commit();
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -75,7 +102,6 @@ public class SecondFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
 
     @Override
@@ -88,7 +114,6 @@ public class SecondFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
-
 
 
     @Override

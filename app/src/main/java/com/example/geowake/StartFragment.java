@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +24,10 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 public class StartFragment extends Fragment {
-    private AutoCompleteTextView textInput;
+    public AutoCompleteTextView textInput;
     private Button favorites;
 
     private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Liseberg"};
-
-
 
 
     private OnFragmentInteractionListener mListener;
@@ -53,40 +52,53 @@ public class StartFragment extends Fragment {
         }
 
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((MapsActivity) getActivity()).reset();
+        ((MapsActivity) getActivity()).setFragment(0);
+
+
+
         // Inflate the layout for this fragment
-        View view  = inflater.inflate(R.layout.fragment_start, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_start, container, false);
         favorites = view.findViewById(R.id.button2);
 
-
         textInput = view.findViewById(R.id.autoCompleteTextView2);
-        textInput.setImeActionLabel("Set destination..", KeyEvent.KEYCODE_ENTER);
+        //textInput.setImeActionLabel("Set destination..", KeyEvent.KEYCODE_ENTER);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, PLACES);
+        textInput.setAdapter(adapter);
 
-
-        textInput.setOnEditorActionListener(new TextView.OnEditorActionListener()
-        {
+        textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId,
-                                          KeyEvent event)
-            {
+                                          KeyEvent event) {
+                textInput.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 boolean handled = false;
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-
+                    if (textInput.getText().toString().equals("Lunds Tekniska Hogskola")) {
+                        openSecondFragment();
+                        ((MapsActivity) getActivity()).setDestination();
+                    }
                     hideKeyboard();
-                    openSecondFragment();
                     handled = true;
 
                 }
                 return handled;
             }
         });
+
+
+
+
         return view;
+
+
     }
 
 
@@ -99,13 +111,12 @@ public class StartFragment extends Fragment {
     }
 
 
-
-      private void openSecondFragment(){
+    public void openSecondFragment() {
         SecondFragment secondFragment = new SecondFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-          transaction.setCustomAnimations(R.anim.slide, R.anim.slide);
-          transaction.replace(R.id.main, secondFragment, "SECOND_FRAGMENT").commit();
+        transaction.setCustomAnimations(R.anim.slide, R.anim.slideback);
+        transaction.replace(R.id.main, secondFragment, "SECOND_FRAGMENT").addToBackStack("tag").commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -137,4 +148,5 @@ public class StartFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction();
     }
+
 }

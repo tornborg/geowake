@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,14 +45,21 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_third, container, false);
+        View view = inflater.inflate(R.layout.fragment_third, container, false);
 
-        stop  = view.findViewById(R.id.stop);
+        ((MapsActivity) getActivity()).setFragment(2);
+
+        stop = view.findViewById(R.id.stop);
 
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                stop.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                ((MapsActivity) getActivity()).changeAlarmStatus();
                 openStartFragment();
+                ((MapsActivity) getActivity()).reset();
+
             }
         });
 
@@ -63,7 +71,7 @@ public class ThirdFragment extends Fragment {
         StartFragment startFragment = new StartFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide, R.anim.slide);
+        transaction.setCustomAnimations(R.anim.slide, 0, 0, R.anim.slide);
         transaction.replace(R.id.main, startFragment, "START_FRAGMENT").commit();
     }
 

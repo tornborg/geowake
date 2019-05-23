@@ -9,6 +9,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,7 +28,7 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_screen);
-        vibrator =  ((Vibrator) getSystemService(VIBRATOR_SERVICE));
+        vibrator = ((Vibrator) getSystemService(VIBRATOR_SERVICE));
 
 
         vibrator.vibrate(VibrationEffect.createWaveform(vibPattern, 0));
@@ -41,6 +42,8 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
         ((View) stopAlarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                stopAlarm.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 stopEvents();
             }
         });
@@ -49,11 +52,11 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
     }
 
 
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
-                float x = event.values[0];
+            float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
             mAccelLast = mAccelCurrent;
@@ -61,31 +64,34 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
 
-            if (mAccel > 5) {
+            if (mAccel > 3) {
                 stopEvents();
-                }
             }
         }
+    }
 
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-        }
+    }
 
-        private void openMapsActivity(){
-            Intent intent = new Intent(this, MapsActivity.class);
-            startActivity(intent);
+    private void openMapsActivity() {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
 
-        }
+    }
 
-        private void stopEvents(){
-            Toast.makeText(getApplicationContext(), "Alarm Turned Off", Toast.LENGTH_LONG).show();
-            vibrator.cancel();
-            mSensorManager = null;
-            openMapsActivity();
+    private void stopEvents() {
+        Toast.makeText(getApplicationContext(), "Alarm Turned Off", Toast.LENGTH_LONG).show();
+        vibrator.cancel();
+        mSensorManager.unregisterListener(this);
+        openMapsActivity();
 
-        }
+    }
 
+    public void onBackPressed(){
+
+    }
 
 
 }

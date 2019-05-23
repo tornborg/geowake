@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -79,6 +80,7 @@ public class StartFragment extends Fragment {
         favorites = view.findViewById(R.id.button2);
 
         textInput = view.findViewById(R.id.autoCompleteTextView2);
+        textInput.playSoundEffect(SoundEffectConstants.CLICK);
         //textInput.setImeActionLabel("Set destination..", KeyEvent.KEYCODE_ENTER);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, PLACES);
         textInput.setAdapter(adapter);

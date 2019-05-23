@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -23,17 +24,19 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
     private Button stopAlarm;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_screen);
         vibrator = ((Vibrator) getSystemService(VIBRATOR_SERVICE));
-
+        mp = MediaPlayer.create(this, R.raw.alarmsound);
 
         vibrator.vibrate(VibrationEffect.createWaveform(vibPattern, 0));
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        mp.start();
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
@@ -85,11 +88,12 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
         Toast.makeText(getApplicationContext(), "Alarm Turned Off", Toast.LENGTH_LONG).show();
         vibrator.cancel();
         mSensorManager.unregisterListener(this);
+        mp.stop();
         openMapsActivity();
 
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
 
     }
 

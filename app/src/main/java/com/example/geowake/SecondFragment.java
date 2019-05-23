@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class SecondFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
+        view.playSoundEffect(SoundEffectConstants.CLICK);
 
         ImageView circle;
         circle = view.findViewById(R.id.circle2);

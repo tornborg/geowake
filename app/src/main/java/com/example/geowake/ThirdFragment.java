@@ -79,7 +79,7 @@ public class ThirdFragment extends Fragment {
             }
         });
 
-        TextView myText = view.findViewById(R.id.textView7);
+        TextView myText = view.findViewById(R.id.sweetdreams);
 
         Animation anim = AnimationUtils.loadAnimation(getContext(),
                 R.anim.fade);

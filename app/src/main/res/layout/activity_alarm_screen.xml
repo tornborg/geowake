@@ -52,7 +52,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/yantramanav_thin"
-        android:text="Shake the device or press the button to turn of the alarm"
+        android:text="Shake the device or press the button to turn off the alarm"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="30dp"

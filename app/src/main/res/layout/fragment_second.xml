@@ -38,13 +38,14 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="106dp"
-            android:layout_marginTop="425dp"
+            android:layout_marginTop="441dp"
             android:layout_marginEnd="106dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/yantramanav_thin"
             android:thumb="@drawable/seek"
             app:layout_constraintBottom_toTopOf="@+id/start"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,7 +102,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="450dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="11dp"
+            android:layout_marginBottom="29dp"
             android:ems="10"
             android:fontFamily="@font/yantramanav_thin"
             android:gravity="center"
@@ -124,7 +125,7 @@
             android:layout_height="7.5dp"
             android:layout_marginStart="110dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/circle"
             app:layout_constraintBottom_toTopOf="@+id/editText5"
             app:layout_constraintEnd_toStartOf="@+id/circle2"
@@ -136,7 +137,7 @@
             android:layout_height="7.5dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="110dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/circle"
             app:layout_constraintBottom_toTopOf="@+id/editText5"
             app:layout_constraintEnd_toEndOf="@+id/editText5"
@@ -148,12 +149,11 @@
             android:layout_height="7.5dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/circle"
             app:layout_constraintBottom_toTopOf="@+id/editText5"
             app:layout_constraintEnd_toStartOf="@+id/circle3"
             app:layout_constraintStart_toEndOf="@+id/circle1" />
-
 
 
     </android.support.constraint.ConstraintLayout>

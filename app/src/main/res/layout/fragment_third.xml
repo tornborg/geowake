@@ -36,15 +36,15 @@
 
         <TextView
             android:id="@+id/sweetdreams"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="149dp"
+            android:layout_height="33dp"
             android:layout_marginStart="106dp"
             android:layout_marginTop="425dp"
             android:layout_marginEnd="106dp"
             android:layout_marginBottom="5dp"
             android:fontFamily="@font/yantramanav_thin"
-            android:textStyle="bold"
-            android:text="Sweet dreams!"
+            android:gravity="center"
+            android:text="zzZZZ"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="24sp"
@@ -89,21 +89,21 @@
             app:layout_constraintEnd_toStartOf="@+id/circle3"
             app:layout_constraintStart_toEndOf="@+id/circle1" />
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="177dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="176dp"
-            android:layout_marginBottom="20dp"
-            android:text="zZZ"
-            android:textSize="30dp"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/stop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sweetdreams" />
+        <!--<TextView-->
+            <!--android:id="@+id/textView7"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="38dp"-->
+            <!--android:layout_marginStart="177dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginEnd="176dp"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:text="zZZ"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="30dp"-->
+            <!--app:layout_constraintBottom_toTopOf="@+id/stop"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/sweetdreams" />-->
 
     </android.support.constraint.ConstraintLayout>
 

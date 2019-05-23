@@ -2,6 +2,8 @@ package com.example.geowake;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
@@ -24,7 +27,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class StartFragment extends Fragment {
     private AutoCompleteTextView textInput;
-    private Button favorites;
+    private ImageView circle;
 
     private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Liseberg"};
 
@@ -61,9 +64,9 @@ public class StartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view  = inflater.inflate(R.layout.fragment_start, container, false);
-        favorites = view.findViewById(R.id.button2);
 
-
+        circle = view.findViewById(R.id.circle1);
+        circle.getBackground().setColorFilter(Color.parseColor("#ffffff"), PorterDuff.Mode.SRC_OVER);
         textInput = view.findViewById(R.id.autoCompleteTextView2);
         textInput.setImeActionLabel("Set destination..", KeyEvent.KEYCODE_ENTER);
 
@@ -104,7 +107,7 @@ public class StartFragment extends Fragment {
         SecondFragment secondFragment = new SecondFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-          transaction.setCustomAnimations(R.anim.slide, R.anim.slide);
+          transaction.setCustomAnimations(R.anim.slide, 0, 0, R.anim.slide);
           transaction.replace(R.id.main, secondFragment, "SECOND_FRAGMENT").commit();
     }
 

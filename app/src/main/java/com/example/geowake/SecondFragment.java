@@ -1,7 +1,8 @@
 package com.example.geowake;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 
 public class SecondFragment extends Fragment {
@@ -19,6 +21,8 @@ public class SecondFragment extends Fragment {
 
 
     private Button startAlarm;
+    private ImageView circle;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,6 +49,10 @@ public class SecondFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view  = inflater.inflate(R.layout.fragment_second, container, false);
+
+
+
+
 
         startAlarm = view.findViewById(R.id.start);
 

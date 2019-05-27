@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class AlarmScreen extends AppCompatActivity implements SensorEventListener {
     private long[] vibPattern = {1000, 1000};
@@ -85,7 +84,6 @@ public class AlarmScreen extends AppCompatActivity implements SensorEventListene
     }
 
     private void stopEvents() {
-        Toast.makeText(getApplicationContext(), "Alarm Turned Off", Toast.LENGTH_LONG).show();
         vibrator.cancel();
         mSensorManager.unregisterListener(this);
         mp.stop();

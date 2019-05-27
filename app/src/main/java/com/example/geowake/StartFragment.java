@@ -31,7 +31,7 @@ public class StartFragment extends Fragment {
     public AutoCompleteTextView textInput;
     private Button favorites;
 
-    private static final String[] PLACES = new String[]{"Lunds Tekniska Hogskola", "Vastgota Nation", "High Chaparall", "Liseberg"};
+    private static final String[] PLACES = new String[]{"Lund LTH", "Vastgota Nation", "High Chaparall", "Lund Lundagård", "Lund Botulfsplatsen", "Lund Sparta", "Lund Universtietssjukhuset", "Lund Delfinen"};
 
 
     private OnFragmentInteractionListener mListener;
@@ -93,7 +93,7 @@ public class StartFragment extends Fragment {
                 textInput.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 boolean handled = false;
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    if (textInput.getText().toString().equals("Lunds Tekniska Hogskola")) {
+                    if (textInput.getText().toString().equals("Lund LTH")) {
                         openSecondFragment();
                         ((MapsActivity) getActivity()).setDestination();
                     }

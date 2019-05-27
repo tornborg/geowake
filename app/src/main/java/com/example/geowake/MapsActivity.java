@@ -219,8 +219,8 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     public void setDestination() {
-        if (startFragment.textInput.getText().toString().equals("Lunds Tekniska Hogskola")) {
-            LatLng lth = new LatLng(55.714771, 13.212079);
+        if (startFragment.textInput.getText().toString().equals("Lund LTH")) {
+            LatLng lth = new LatLng(55.712028, 13.208590);
             CameraUpdate current = CameraUpdateFactory.newLatLngZoom(lth, 15);
 
             mMap.animateCamera(current);
@@ -262,7 +262,6 @@ public class MapsActivity extends FragmentActivity implements
                 if (distanceInMeters < mCircle.getRadius()) {
                     //Trigger Alarm
                     openAlarmScreen();
-                    Toast.makeText(getApplicationContext(), "Wakey Wakey", Toast.LENGTH_LONG).show();
                 }
             }
 
